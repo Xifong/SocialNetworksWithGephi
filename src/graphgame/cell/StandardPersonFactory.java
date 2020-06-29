@@ -6,7 +6,7 @@ import graphgame.probabilityassignment.SigmoidProbAssigner;
 
 import java.util.HashMap;
 
-public class StandardPersonFactory extends AbstractCellFactory {
+public class StandardPersonFactory implements CellFactory {
     private static MultivariateNormalDistribution attributeDist =
             new MultivariateNormalDistribution(new double[]{0, 0, 0, 0},
                     new double[][]{new double[]{1, 0, 0, 0},

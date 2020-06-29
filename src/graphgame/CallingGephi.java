@@ -1,9 +1,9 @@
 package graphgame;
 
-import graphgame.cellgraph.BasicCellGraph;
+import graphgame.cellgraph.ListCellGraph;
 import graphgame.cellgraph.CellGraph;
-import graphgame.cellgraph.CellGraphGenerator;
-import graphgame.cellgraph.FairCellGraphGenerator;
+import graphgame.cellgraphgeneration.CellGraphGenerator;
+import graphgame.cellgraphgeneration.AssociationBasedGenerator;
 
 import java.util.Scanner;
 
@@ -14,7 +14,7 @@ public class CallingGephi {
     private CellGraph cells;
 
     private CallingGephi(){
-        cells = new BasicCellGraph();
+        cells = new ListCellGraph();
     }
 
     private void run(){
@@ -32,8 +32,9 @@ public class CallingGephi {
     private void generateWorld(){
         setupColumns();
 
-        CellGraphGenerator graphGenerator = new FairCellGraphGenerator();
-        graphGenerator.generate(250);
+        CellGraphGenerator graphGenerator =
+                AssociationBasedGenerator.Factory.getGenerator(250, 8);
+        graphGenerator.generate();
         cells = graphGenerator.getCellGraph();
 
         GephiAdaptor.getInstance().exportGraph();

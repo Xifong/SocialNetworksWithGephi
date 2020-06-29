@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class BasicCellGraph implements  CellGraph {
+public class ListCellGraph implements  CellGraph {
     private List<Cell> cells;
 
-    public BasicCellGraph(){
+    public ListCellGraph(){
         cells = new ArrayList<>();
     }
 

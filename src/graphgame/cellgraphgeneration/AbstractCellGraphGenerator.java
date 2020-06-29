@@ -1,13 +1,14 @@
-package graphgame.cellgraph;
+package graphgame.cellgraphgeneration;
 
 import graphgame.GephiAdaptor;
-import graphgame.cell.AbstractCellFactory;
+import graphgame.cell.CellFactory;
 import graphgame.cell.Cell;
 import graphgame.cell.CellFactoryProducer;
+import graphgame.cellgraph.ListCellGraph;
+import graphgame.cellgraph.CellGraph;
 
 abstract class AbstractCellGraphGenerator implements CellGraphGenerator{
     protected CellGraph cells;
-    protected AbstractCellFactory cellFactory = CellFactoryProducer.getFactory("STANDARD");
 
     @Override
     public CellGraph getCellGraph() {
@@ -16,7 +17,7 @@ abstract class AbstractCellGraphGenerator implements CellGraphGenerator{
 
     protected void reset(){
         GephiAdaptor.getInstance().resetGraph();
-        cells = new BasicCellGraph();
+        cells = new ListCellGraph();
     }
 
     public void iterateRandomConnections(int iterations){
