@@ -16,7 +16,7 @@ public class StandardPersonFactory extends AbstractCellFactory {
 
     @Override
     public Cell createCell() {
-        Cell baseCell = BaseCell.BaseCellFactory.createBasicCell();
+        Cell baseCell = new BaseCell();
         double[] attributeVector = attributeDist.sample();
 
         Cell withAttributes = new SocialAttributes(baseCell, attributeVector);

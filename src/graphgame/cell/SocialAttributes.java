@@ -1,6 +1,7 @@
 package graphgame.cell;
 
-import org.gephi.graph.api.Node;
+import graphgame.GephiAdaptor;
+
 import java.util.HashMap;
 
 class SocialAttributes implements Cell {
@@ -16,11 +17,16 @@ class SocialAttributes implements Cell {
         attributes.put("Intelligence", attributeVector[2]);
         attributes.put("Looks", attributeVector[3]);
 
-        innerCell.getGephiNode().setAttribute("Wealth", this.attributes.get("Wealth"));
-        innerCell.getGephiNode().setAttribute("Social", this.attributes.get("Social"));
-        innerCell.getGephiNode().setAttribute("Intelligence", this.attributes.get("Intelligence"));
-        innerCell.getGephiNode().setAttribute("Looks", this.attributes.get("Looks"));
-        innerCell.getGephiNode().setAttribute("Average", averageStat());
+        GephiAdaptor.getInstance().setNodeAttribute(getNodeID(),
+                "Wealth", this.attributes.get("Wealth"));
+        GephiAdaptor.getInstance().setNodeAttribute(getNodeID(),
+                "Social", this.attributes.get("Social"));
+        GephiAdaptor.getInstance().setNodeAttribute(getNodeID(),
+                "Intelligence", this.attributes.get("Intelligence"));
+        GephiAdaptor.getInstance().setNodeAttribute(getNodeID(),
+                "Looks", this.attributes.get("Looks"));
+        GephiAdaptor.getInstance().setNodeAttribute(getNodeID(),
+                "Average", this.attributes.get("Average"));
     }
 
     private Double averageStat(){
@@ -33,8 +39,8 @@ class SocialAttributes implements Cell {
     }
 
     @Override
-    public Node getGephiNode() {
-        return innerCell.getGephiNode();
+    public long getNodeID() {
+        return innerCell.getNodeID();
     }
 
     @Override

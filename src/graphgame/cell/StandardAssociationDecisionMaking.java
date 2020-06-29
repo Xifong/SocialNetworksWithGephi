@@ -4,7 +4,6 @@ import org.gephi.graph.api.Node;
 import graphgame.probabilityassignment.ProbabilityAssignerContainer;
 
 import java.util.HashMap;
-import java.util.List;
 
 class StandardAssociationDecisionMaking implements Cell {
     private Cell innerCell;
@@ -30,7 +29,7 @@ class StandardAssociationDecisionMaking implements Cell {
         Query intersectQ = filterController.createQuery(intersectionOp);
 
         EgoBuilder.EgoFilter egoFilter = new EgoBuilder.EgoFilter();
-        egoFilter.setPattern(String.valueOf(innerCell.getGephiNode().getId()));
+        egoFilter.setPattern(String.valueOf(innerCell.getNodeID().getId()));
         egoFilter.setDepth(2);
         Query ego2Q = filterController.createQuery(egoFilter);
 
@@ -55,8 +54,8 @@ class StandardAssociationDecisionMaking implements Cell {
     }
 
     @Override
-    public Node getGephiNode() {
-        return innerCell.getGephiNode();
+    public long getNodeID() {
+        return innerCell.getNodeID();
     }
 
     @Override

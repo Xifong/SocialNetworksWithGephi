@@ -16,13 +16,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class GephiAdaptor {
-    private static Workspace workspace;
-    private static Lookup defaultLookup = Lookup.getDefault();
-    private static GraphModel graphModel;
-    private static Graph graph;
-    private static FilterController filterController;
-    private static ImportController importController;
-    private static Table nodeTable;
+    static Workspace workspace;
+    static Lookup defaultLookup = Lookup.getDefault();
+    static GraphModel graphModel;
+    static Graph graph;
+    static FilterController filterController;
+    static ImportController importController;
+    static Table nodeTable;
+    private static GephiNodeManager nodeManager;
 
     private static GephiAdaptor singleton;
 
@@ -40,6 +41,7 @@ public class GephiAdaptor {
         filterController = defaultLookup.lookup(FilterController.class);
         importController = defaultLookup.lookup(ImportController.class);
         nodeTable = graphModel.getNodeTable();
+        nodeManager = new GephiNodeManager();
     }
 
     private static Workspace setupInitialProject(){
@@ -48,22 +50,28 @@ public class GephiAdaptor {
         return pc.getCurrentWorkspace();
     }
 
-    public Node addNewNode(int id){
-        Node newNode = graphModel.factory().newNode(String.valueOf(id));
-        graph.addNode(newNode);
-        return newNode;
+    public long createNode(){
+        return nodeManager.createNode();
     }
 
     void addNodeAttribute(String attributeName, Class type){
         nodeTable.addColumn(attributeName, type);
     }
 
-    public void connectNodes(Node source, Node dest){
+    public void setNodeAttribute(long nodeID, String attribute, Double value){
+        nodeManager.getNode(nodeID).setAttribute(attribute, value);
+    }
+
+    public void connectNodes(long sourceID, long destID){
+        Node source = nodeManager.getNode(sourceID);
+        Node dest = nodeManager.getNode(destID);
         Edge newEdge = graphModel.factory().newEdge(source, dest);
         graph.addEdge(newEdge);
     }
 
-    public boolean areNodesConnected(Node firstNode, Node secondNode){
+    public boolean areNodesConnected(long firstNodeID, long secondNodeID){
+        Node firstNode = nodeManager.getNode(firstNodeID);
+        Node secondNode = nodeManager.getNode(secondNodeID);
         return graph.getEdges(firstNode, secondNode).toArray().length != 0 ||
                 graph.getEdges(secondNode, firstNode).toArray().length != 0;
     }

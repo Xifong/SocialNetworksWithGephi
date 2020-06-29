@@ -1,10 +1,9 @@
 package graphgame.cell;
 
-import org.gephi.graph.api.Node;
 import java.util.HashMap;
 
 public interface Cell {
-    Node getGephiNode();
+    long getNodeID();
 
     default boolean willAssociate(Cell cell){
         return true;

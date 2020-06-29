@@ -17,6 +17,6 @@ public interface CellGraph extends Iterable<Cell>{
 
     default boolean areConnected(Cell firstCell, Cell secondCell){
         return GephiAdaptor.getInstance().
-                areNodesConnected(firstCell.getGephiNode(), secondCell.getGephiNode());
+                areNodesConnected(firstCell.getNodeID(), secondCell.getNodeID());
     }
 }

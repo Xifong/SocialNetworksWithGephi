@@ -20,7 +20,7 @@ public class BasicCellGraph implements  CellGraph {
     }
 
     public void connectCells(Cell source, Cell dest){
-        GephiAdaptor.getInstance().connectNodes(source.getGephiNode(), dest.getGephiNode());
+        GephiAdaptor.getInstance().connectNodes(source.getNodeID(), dest.getNodeID());
     }
 
     @Override
