@@ -12,8 +12,21 @@ public interface CellGraph extends Iterable<Cell>{
     Cell getRandomUnconnectedCell();
 
     default boolean isComplete(){
-        return GephiAdaptor.getInstance().isComplete();
-}
+        int sumToGoTo = size() - 1;
+
+        if(sumToGoTo <= 0){
+            return true;
+        }
+
+        int edges = GephiAdaptor.getInstance().getEdgeCount();
+
+        long currentfactorial = 1;
+
+        while(edges >= currentfactorial && sumToGoTo > 1){
+            currentfactorial += sumToGoTo--;
+        }
+        return edges >= currentfactorial;
+    }
 
     default boolean areConnected(Cell firstCell, Cell secondCell){
         return GephiAdaptor.getInstance().

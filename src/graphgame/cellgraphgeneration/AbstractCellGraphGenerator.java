@@ -37,7 +37,7 @@ abstract class AbstractCellGraphGenerator implements CellGraphGenerator{
         }
     }
 
-    public void iterateRandomAAssociations(int iterations){
+    public void iterateRandomAssociations(int iterations){
         for(int i = 0; i <iterations; ++i) {
             for(Cell cell: cells){
                 makeAssociationFor(cell);

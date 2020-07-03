@@ -27,6 +27,6 @@ public class AssociationBasedGenerator extends AbstractCellGraphGenerator {
             Cell newCell = cellFactory.createCell();
             cells.addCell(newCell);
         }
-        iterateRandomAAssociations(edgeIterations);
+        iterateRandomAssociations(edgeIterations);
     }
 }

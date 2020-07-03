@@ -101,21 +101,8 @@ public class GephiAdaptor {
                 graph.getEdges(secondNode, firstNode).toArray().length != 0;
     }
 
-    public boolean isComplete(){
-        int sumToGoTo = graph.getNodeCount()-1;
-
-        if(sumToGoTo <= 0){
-            return true;
-        }
-
-        int edges = graph.getEdgeCount();
-
-        long currentfactorial = 1;
-
-        while(edges >= currentfactorial && sumToGoTo > 1){
-            currentfactorial += sumToGoTo--;
-        }
-        return edges >= currentfactorial;
+    public int getEdgeCount(){
+        return graph.getEdgeCount();
     }
 
     public void resetGraph(){
