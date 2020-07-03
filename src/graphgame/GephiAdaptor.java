@@ -16,17 +16,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class GephiAdaptor {
-    static Workspace workspace;
-    static Lookup defaultLookup = Lookup.getDefault();
+    private static Workspace workspace;
+    private static Lookup defaultLookup = Lookup.getDefault();
     static GraphModel graphModel;
     static Graph graph;
-    static FilterController filterController;
-    static ImportController importController;
-    static Table nodeTable;
+    private static FilterController filterController;
+    private static ImportController importController;
+    private static Table nodeTable;
     private static GephiNodeManager nodeManager;
 
     private static GephiAdaptor singleton;
@@ -64,6 +63,10 @@ public class GephiAdaptor {
 
     public void setNodeAttribute(int nodeID, String attribute, Double value){
         nodeManager.getNode(nodeID).setAttribute(attribute, value);
+    }
+
+    public double getNumericalNodeAttribute(int nodeId, String attribute){
+        return (double)nodeManager.getNode(nodeId).getAttribute(attribute);
     }
 
     public List<Integer> getNodeIDs(){

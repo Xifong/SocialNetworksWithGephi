@@ -20,18 +20,32 @@ public class StandardPersonFactory implements CellFactory {
         return wrapAssociationBehaviour(wrapSocialAttributes(new BaseCell()));
     }
 
-    @Override
-    public Cell createCellForExistingNode(int nodeId) {
-        return wrapAssociationBehaviour(wrapSocialAttributes(new BaseCell(nodeId)));
-    }
-
     private Cell wrapSocialAttributes(Cell cell){
         double[] attributeVector = attributeDist.sample();
         return  new SocialAttributes(cell, attributeVector);
     }
 
+    @Override
+    public Cell createCellForExistingNode(int nodeId) {
+        return wrapAssociationBehaviour(wrapExistingSocialAttributes(new BaseCell(nodeId)));
+    }
+
+    private Cell wrapExistingSocialAttributes(Cell cell){
+        double[] attributeVector = getSocialAttributes(cell.getNodeID());
+        return new SocialAttributes(cell, attributeVector);
+    }
+
+    private double[] getSocialAttributes(int nodeId){
+        return new double[]{
+                GephiAdaptor.getInstance().getNumericalNodeAttribute(nodeId, "Wealth"),
+                GephiAdaptor.getInstance().getNumericalNodeAttribute(nodeId, "Social"),
+                GephiAdaptor.getInstance().getNumericalNodeAttribute(nodeId, "Intelligence"),
+                GephiAdaptor.getInstance().getNumericalNodeAttribute(nodeId, "Looks"),
+        };
+    }
+
     private Cell wrapAssociationBehaviour(Cell cell){
-        return new StandardAssociationDecisionMaking(cell, getProbabilityAssigner());
+        return new StandardAssociationDecision(cell, getProbabilityAssigner());
     }
 
     private SigmoidProbAssigner getProbabilityAssigner(){

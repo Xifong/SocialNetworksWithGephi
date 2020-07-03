@@ -4,10 +4,10 @@ import graphgame.probabilityassignment.ProbabilityAssignerContainer;
 
 import java.util.HashMap;
 
-class StandardAssociationDecisionMaking extends CellDecoratorBase {
+class StandardAssociationDecision extends CellDecoratorBase {
     private ProbabilityAssignerContainer probabilityAssigner;
 
-    StandardAssociationDecisionMaking(Cell innerCell, ProbabilityAssignerContainer probabilityAssigner){
+    StandardAssociationDecision(Cell innerCell, ProbabilityAssignerContainer probabilityAssigner){
         super(innerCell);
         this.probabilityAssigner = probabilityAssigner;
     }

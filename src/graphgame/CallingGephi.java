@@ -52,6 +52,7 @@ public class CallingGephi {
         System.out.println(GephiAdaptor.graph.getNodeCount());
         System.out.println(GephiAdaptor.graph.getEdgeCount());
         System.out.println(cells.size());
+        System.out.println(cells.getCell(0).getAttributes());
     }
 
     private void setupColumns(){
