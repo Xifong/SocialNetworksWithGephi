@@ -1,16 +1,14 @@
 package graphgame.cell;
 
-import org.gephi.graph.api.Node;
 import graphgame.probabilityassignment.ProbabilityAssignerContainer;
 
 import java.util.HashMap;
 
-class StandardAssociationDecisionMaking implements Cell {
-    private Cell innerCell;
+class StandardAssociationDecisionMaking extends CellDecoratorBase {
     private ProbabilityAssignerContainer probabilityAssigner;
 
     StandardAssociationDecisionMaking(Cell innerCell, ProbabilityAssignerContainer probabilityAssigner){
-        this.innerCell = innerCell;
+        super(innerCell);
         this.probabilityAssigner = probabilityAssigner;
     }
 
@@ -51,15 +49,5 @@ class StandardAssociationDecisionMaking implements Cell {
     public boolean willAssociate(Cell cell){
         HashMap<String, Double> attributes = cell.getAttributes();
         return probabilityAssigner.overallProbability(attributes) > Math.random();
-    }
-
-    @Override
-    public int getNodeID() {
-        return innerCell.getNodeID();
-    }
-
-    @Override
-    public HashMap<String, Double> getAttributes(){
-        return innerCell.getAttributes();
     }
 }

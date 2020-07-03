@@ -4,13 +4,11 @@ import graphgame.GephiAdaptor;
 
 import java.util.HashMap;
 
-class SocialAttributes implements Cell {
-    private Cell innerCell;
-
+class SocialAttributes extends CellDecoratorBase {
     private HashMap<String, Double> attributes;
 
     SocialAttributes(Cell innerCell, double[] attributeVector){
-        this.innerCell = innerCell;
+        super(innerCell);
         this.attributes = new HashMap<>();
         attributes.put("Wealth", attributeVector[0]);
         attributes.put("Social", attributeVector[1]);
@@ -36,15 +34,5 @@ class SocialAttributes implements Cell {
     @Override
     public HashMap<String, Double> getAttributes(){
         return attributes;
-    }
-
-    @Override
-    public int getNodeID() {
-        return innerCell.getNodeID();
-    }
-
-    @Override
-    public boolean willAssociate(Cell cell){
-        return innerCell.willAssociate(cell);
     }
 }
