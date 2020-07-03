@@ -54,7 +54,7 @@ class StandardAssociationDecisionMaking implements Cell {
     }
 
     @Override
-    public long getNodeID() {
+    public int getNodeID() {
         return innerCell.getNodeID();
     }
 

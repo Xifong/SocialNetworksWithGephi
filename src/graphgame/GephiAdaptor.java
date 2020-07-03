@@ -10,10 +10,14 @@ import org.gephi.io.processor.plugin.DefaultProcessor;
 import org.gephi.project.api.ProjectController;
 import org.gephi.project.api.Workspace;
 import org.openide.util.Lookup;
+import org.openide.util.Pair;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class GephiAdaptor {
     static Workspace workspace;
@@ -50,7 +54,7 @@ public class GephiAdaptor {
         return pc.getCurrentWorkspace();
     }
 
-    public long createNode(){
+    public int createNode(){
         return nodeManager.createNode();
     }
 
@@ -58,18 +62,36 @@ public class GephiAdaptor {
         nodeTable.addColumn(attributeName, type);
     }
 
-    public void setNodeAttribute(long nodeID, String attribute, Double value){
+    public void setNodeAttribute(int nodeID, String attribute, Double value){
         nodeManager.getNode(nodeID).setAttribute(attribute, value);
     }
 
-    public void connectNodes(long sourceID, long destID){
+    public List<Integer> getNodeIDs(){
+        List<Integer> IDs = new ArrayList<>();
+        for(Node node : graph.getNodes().toCollection()){
+            IDs.add(Integer.valueOf((String)node.getId()));
+        }
+        return IDs;
+    }
+
+    public List<Pair<Integer, Integer>> getIDAdjacencies(){
+        List<Pair<Integer, Integer>> adjacencies = new ArrayList<>();
+        for(Edge edge : graph.getEdges().toCollection()){
+            adjacencies.add(
+                    Pair.of(Integer.valueOf((String)edge.getSource().getId()),
+                            Integer.valueOf((String)edge.getTarget().getId())));
+        }
+        return adjacencies;
+    }
+
+    public void connectNodes(int sourceID, int destID){
         Node source = nodeManager.getNode(sourceID);
         Node dest = nodeManager.getNode(destID);
         Edge newEdge = graphModel.factory().newEdge(source, dest);
         graph.addEdge(newEdge);
     }
 
-    public boolean areNodesConnected(long firstNodeID, long secondNodeID){
+    public boolean areNodesConnected(int firstNodeID, int secondNodeID){
         Node firstNode = nodeManager.getNode(firstNodeID);
         Node secondNode = nodeManager.getNode(secondNodeID);
         return graph.getEdges(firstNode, secondNode).toArray().length != 0 ||

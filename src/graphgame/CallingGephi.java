@@ -4,6 +4,7 @@ import graphgame.cellgraph.ListCellGraph;
 import graphgame.cellgraph.CellGraph;
 import graphgame.cellgraphgeneration.CellGraphGenerator;
 import graphgame.cellgraphgeneration.AssociationBasedGenerator;
+import graphgame.cellgraphgeneration.ImportGenerator;
 
 import java.util.Scanner;
 
@@ -42,10 +43,15 @@ public class CallingGephi {
 
     private void loadWorld(){
         GephiAdaptor.getInstance().importGraph();
+        CellGraphGenerator importGenerator = ImportGenerator.Factory.getGenerator();
+        importGenerator.generate();
+        cells = importGenerator.getCellGraph();
     }
 
     private void iterateWorld(){
-
+        System.out.println(GephiAdaptor.graph.getNodeCount());
+        System.out.println(GephiAdaptor.graph.getEdgeCount());
+        System.out.println(cells.size());
     }
 
     private void setupColumns(){

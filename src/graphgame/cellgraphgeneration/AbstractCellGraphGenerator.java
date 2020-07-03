@@ -1,9 +1,7 @@
 package graphgame.cellgraphgeneration;
 
 import graphgame.GephiAdaptor;
-import graphgame.cell.CellFactory;
 import graphgame.cell.Cell;
-import graphgame.cell.CellFactoryProducer;
 import graphgame.cellgraph.ListCellGraph;
 import graphgame.cellgraph.CellGraph;
 
@@ -17,6 +15,10 @@ abstract class AbstractCellGraphGenerator implements CellGraphGenerator{
 
     protected void reset(){
         GephiAdaptor.getInstance().resetGraph();
+        resetCellsOnly();
+    }
+
+    protected void resetCellsOnly(){
         cells = new ListCellGraph();
     }
 

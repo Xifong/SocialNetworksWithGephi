@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public interface CellFactory {
     Cell createCell();
+    Cell createCellForExistingNode(int nodeId);
 
     default ArrayList<Cell> createCells(int number){
         ArrayList<Cell> cells = new ArrayList<>();

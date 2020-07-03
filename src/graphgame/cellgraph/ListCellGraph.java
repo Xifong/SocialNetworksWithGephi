@@ -20,7 +20,8 @@ public class ListCellGraph implements  CellGraph {
     }
 
     public void connectCells(Cell source, Cell dest){
-        GephiAdaptor.getInstance().connectNodes(source.getNodeID(), dest.getNodeID());
+        if(!GephiAdaptor.getInstance().areNodesConnected(source.getNodeID(), dest.getNodeID()))
+            GephiAdaptor.getInstance().connectNodes(source.getNodeID(), dest.getNodeID());
     }
 
     @Override

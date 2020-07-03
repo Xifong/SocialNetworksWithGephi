@@ -26,7 +26,7 @@ class SocialAttributes implements Cell {
         GephiAdaptor.getInstance().setNodeAttribute(getNodeID(),
                 "Looks", this.attributes.get("Looks"));
         GephiAdaptor.getInstance().setNodeAttribute(getNodeID(),
-                "Average", this.attributes.get("Average"));
+                "Average", this.averageStat());
     }
 
     private Double averageStat(){
@@ -39,7 +39,7 @@ class SocialAttributes implements Cell {
     }
 
     @Override
-    public long getNodeID() {
+    public int getNodeID() {
         return innerCell.getNodeID();
     }
 

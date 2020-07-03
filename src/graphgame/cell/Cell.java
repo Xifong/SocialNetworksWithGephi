@@ -3,7 +3,7 @@ package graphgame.cell;
 import java.util.HashMap;
 
 public interface Cell {
-    long getNodeID();
+    int getNodeID();
 
     default boolean willAssociate(Cell cell){
         return true;
