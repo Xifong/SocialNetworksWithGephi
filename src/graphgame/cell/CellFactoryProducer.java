@@ -1,9 +1,13 @@
 package graphgame.cell;
 
 public class CellFactoryProducer {
-    public static CellFactory getFactory(String type){
+    public enum FactoryType{
+        STANDARD
+    }
+
+    public static CellFactory getFactory(FactoryType type){
         switch(type){
-            case "STANDARD":
+            case STANDARD:
                 return new StandardPersonFactory();
             default:
                 return null;

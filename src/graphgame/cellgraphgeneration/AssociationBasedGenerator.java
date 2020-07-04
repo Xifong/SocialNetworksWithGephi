@@ -3,6 +3,7 @@ package graphgame.cellgraphgeneration;
 import graphgame.cell.Cell;
 import graphgame.cell.CellFactory;
 import graphgame.cell.CellFactoryProducer;
+import graphgame.cell.CellFactoryProducer.FactoryType;
 
 public class AssociationBasedGenerator extends AbstractCellGraphGenerator {
     public static class Factory{
@@ -11,7 +12,7 @@ public class AssociationBasedGenerator extends AbstractCellGraphGenerator {
         }
     }
 
-    private CellFactory cellFactory = CellFactoryProducer.getFactory("STANDARD");
+    private CellFactory cellFactory = CellFactoryProducer.getFactory(FactoryType.STANDARD);
     private int edgeIterations;
     private int vertices;
 

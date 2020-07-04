@@ -4,6 +4,7 @@ import graphgame.GephiAdaptor;
 import graphgame.cell.CellFactory;
 import graphgame.cell.CellFactoryProducer;
 import org.openide.util.Pair;
+import graphgame.cell.CellFactoryProducer.FactoryType;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class ImportGenerator extends AbstractCellGraphGenerator {
     @Override
     public void generate() {
         resetCellsOnly();
-        CellFactory factory =  CellFactoryProducer.getFactory("STANDARD");
+        CellFactory factory =  CellFactoryProducer.getFactory(FactoryType.STANDARD);
 
         List<Integer> IDs =  GephiAdaptor.getInstance().getNodeIDs();
         for(Integer ID: IDs){
