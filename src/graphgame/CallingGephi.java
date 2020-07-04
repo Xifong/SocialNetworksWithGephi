@@ -1,12 +1,14 @@
 package graphgame;
 
+import java.util.Scanner;
+
 import graphgame.cellgraph.ListCellGraph;
 import graphgame.cellgraph.CellGraph;
 import graphgame.cellgraphgeneration.CellGraphGenerator;
 import graphgame.cellgraphgeneration.AssociationBasedGenerator;
 import graphgame.cellgraphgeneration.ImportGenerator;
-
-import java.util.Scanner;
+import graphgame.simulation.Simulation;
+import graphgame.simulation.associationsAndPruningSim;
 
 public class CallingGephi {
     public static void main(String[] args){
@@ -23,36 +25,35 @@ public class CallingGephi {
         System.out.println("New world y/n?");
         String response = scanner.next();
         if (response.charAt(0) == 'n'){
-            loadWorld();
-            iterateWorld();
+            this.cells = loadWorld();
+            this.cells = iterateWorld();
         }
         else
-            generateWorld();
+            this.cells = generateWorld();
+
+        GephiAdaptor.getInstance().exportGraph();
     }
 
-    private void generateWorld(){
+    private CellGraph generateWorld(){
         setupColumns();
 
         CellGraphGenerator graphGenerator =
                 AssociationBasedGenerator.Factory.getGenerator(250, 8);
         graphGenerator.generate();
-        cells = graphGenerator.getCellGraph();
-
-        GephiAdaptor.getInstance().exportGraph();
+        return graphGenerator.getCellGraph();
     }
 
-    private void loadWorld(){
+    private CellGraph loadWorld(){
         GephiAdaptor.getInstance().importGraph();
         CellGraphGenerator importGenerator = ImportGenerator.Factory.getGenerator();
         importGenerator.generate();
-        cells = importGenerator.getCellGraph();
+        return importGenerator.getCellGraph();
     }
 
-    private void iterateWorld(){
-        System.out.println(GephiAdaptor.graph.getNodeCount());
-        System.out.println(GephiAdaptor.graph.getEdgeCount());
-        System.out.println(cells.size());
-        System.out.println(cells.getCell(0).getAttributes());
+    private CellGraph iterateWorld(){
+        Simulation sim = new associationsAndPruningSim(cells);
+        sim.iterate();
+        return sim.getState();
     }
 
     private void setupColumns(){

@@ -6,19 +6,19 @@ import graphgame.cellgraph.ListCellGraph;
 import graphgame.cellgraph.CellGraph;
 
 abstract class AbstractCellGraphGenerator implements CellGraphGenerator{
-    protected CellGraph cells;
+    CellGraph cells;
 
     @Override
     public CellGraph getCellGraph() {
         return cells;
     }
 
-    protected void reset(){
+    void reset(){
         GephiAdaptor.getInstance().resetGraph();
         resetCellsOnly();
     }
 
-    protected void resetCellsOnly(){
+    void resetCellsOnly(){
         cells = new ListCellGraph();
     }
 
@@ -30,14 +30,14 @@ abstract class AbstractCellGraphGenerator implements CellGraphGenerator{
         }
     }
 
-    protected void makeNonRepeatConnectionFor(Cell cell){
-        Cell toConnectTo = findConnectionFor(cell);
+    void makeNonRepeatConnectionFor(Cell cell){
+        Cell toConnectTo = cells.getRandomNonRepeatCell(cell);
         if(toConnectTo != null){
-            cells.connectCells(cell, toConnectTo);
+            cells.connect(cell, toConnectTo);
         }
     }
 
-    public void iterateRandomAssociations(int iterations){
+    void iterateRandomAssociations(int iterations){
         for(int i = 0; i <iterations; ++i) {
             for(Cell cell: cells){
                 makeAssociationFor(cell);
@@ -46,19 +46,9 @@ abstract class AbstractCellGraphGenerator implements CellGraphGenerator{
     }
 
     private void makeAssociationFor(Cell cell){
-        Cell toConnectTo = findConnectionFor(cell);
+        Cell toConnectTo = cells.getRandomNonRepeatCell(cell);
         if(toConnectTo != null && cell.willAssociate(toConnectTo) && toConnectTo.willAssociate(cell)){
-            cells.connectCells(cell, toConnectTo);
+            cells.connect(cell, toConnectTo);
         }
-    }
-
-    private Cell findConnectionFor(Cell cell){
-        if(!cells.isComplete()){
-            Cell toConnectTo = cells.getRandomCell();
-            while(toConnectTo == cell || cells.areConnected(cell, toConnectTo))
-                toConnectTo = cells.getRandomCell();
-            return toConnectTo;
-        }
-        return null;
     }
 }

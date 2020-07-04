@@ -26,7 +26,7 @@ public class ImportGenerator extends AbstractCellGraphGenerator {
 
         List<Pair<Integer, Integer>> adjacencies =  GephiAdaptor.getInstance().getIDAdjacencies();
         for(Pair<Integer, Integer> pair: adjacencies){
-            cells.connectCells(cells.getCell(pair.first()), cells.getCell(pair.second()));
+            cells.connect(cells.getCell(pair.first()), cells.getCell(pair.second()));
         }
     }
 }

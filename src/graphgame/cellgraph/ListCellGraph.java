@@ -2,6 +2,7 @@ package graphgame.cellgraph;
 
 import graphgame.GephiAdaptor;
 import graphgame.cell.Cell;
+import graphgame.utilities.Shuffler;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -19,9 +20,16 @@ public class ListCellGraph implements  CellGraph {
         cells.add(toAdd);
     }
 
-    public void connectCells(Cell source, Cell dest){
-        if(!GephiAdaptor.getInstance().areNodesConnected(source.getNodeID(), dest.getNodeID()))
-            GephiAdaptor.getInstance().connectNodes(source.getNodeID(), dest.getNodeID());
+    @Override
+    public void connect(Cell a, Cell b){
+        if(!GephiAdaptor.getInstance().areNodesConnected(a.getNodeID(), b.getNodeID()))
+            GephiAdaptor.getInstance().connectNodes(a.getNodeID(), b.getNodeID());
+    }
+
+    @Override
+    public void disconnect(Cell a, Cell b){
+        if(GephiAdaptor.getInstance().areNodesConnected(a.getNodeID(), b.getNodeID()))
+            GephiAdaptor.getInstance().disconnectNodes(a.getNodeID(), b.getNodeID());
     }
 
     @Override
@@ -41,12 +49,24 @@ public class ListCellGraph implements  CellGraph {
     }
 
     @Override
-    public Cell getRandomUnconnectedCell() {
+    public Cell getRandomNonRepeatCell(Cell cell) {
+        if(!isComplete()){
+            Cell toConnectTo = getRandomCell();
+            while(toConnectTo == cell || areConnected(cell, toConnectTo))
+                toConnectTo = getRandomCell();
+            return toConnectTo;
+        }
         return null;
     }
 
     @Override
     public Iterator<Cell> iterator() {
         return cells.iterator();
+    }
+
+    @Override
+    public Iterator<Cell> shuffledIterator() {
+        List<Cell> shuffledCells = Shuffler.shuffle(cells);
+        return shuffledCells.iterator();
     }
 }

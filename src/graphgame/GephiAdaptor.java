@@ -53,12 +53,12 @@ public class GephiAdaptor {
         return pc.getCurrentWorkspace();
     }
 
-    public int createNode(){
-        return nodeManager.createNode();
-    }
-
     void addNodeAttribute(String attributeName, Class type){
         nodeTable.addColumn(attributeName, type);
+    }
+
+    public int createNode(){
+        return nodeManager.createNode();
     }
 
     public void setNodeAttribute(int nodeID, String attribute, Double value){
@@ -67,6 +67,10 @@ public class GephiAdaptor {
 
     public double getNumericalNodeAttribute(int nodeId, String attribute){
         return (double)nodeManager.getNode(nodeId).getAttribute(attribute);
+    }
+
+    public int getEdgeCount(){
+        return graph.getEdgeCount();
     }
 
     public List<Integer> getNodeIDs(){
@@ -87,6 +91,17 @@ public class GephiAdaptor {
         return adjacencies;
     }
 
+    public boolean areNodesConnected(int firstNodeID, int secondNodeID){
+        return connectedForwards(firstNodeID, secondNodeID) ||
+                connectedForwards(secondNodeID, firstNodeID);
+    }
+
+    private boolean connectedForwards(int firstNodeID, int secondNodeID){
+        Node firstNode = nodeManager.getNode(firstNodeID);
+        Node secondNode = nodeManager.getNode(secondNodeID);
+        return graph.getEdges(firstNode, secondNode).toArray().length != 0;
+    }
+
     public void connectNodes(int sourceID, int destID){
         Node source = nodeManager.getNode(sourceID);
         Node dest = nodeManager.getNode(destID);
@@ -94,15 +109,14 @@ public class GephiAdaptor {
         graph.addEdge(newEdge);
     }
 
-    public boolean areNodesConnected(int firstNodeID, int secondNodeID){
-        Node firstNode = nodeManager.getNode(firstNodeID);
-        Node secondNode = nodeManager.getNode(secondNodeID);
-        return graph.getEdges(firstNode, secondNode).toArray().length != 0 ||
-                graph.getEdges(secondNode, firstNode).toArray().length != 0;
-    }
+    public void disconnectNodes(int sourceID, int destID){
+        Node source = nodeManager.getNode(sourceID);
+        Node dest = nodeManager.getNode(destID);
 
-    public int getEdgeCount(){
-        return graph.getEdgeCount();
+        if(connectedForwards(sourceID, destID))
+            graph.removeEdge(graph.getEdge(source, dest));
+        else if(connectedForwards(destID, sourceID))
+            graph.removeEdge(graph.getEdge(dest, source));
     }
 
     public void resetGraph(){
