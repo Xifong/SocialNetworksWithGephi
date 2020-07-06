@@ -16,9 +16,9 @@ class StandardAssociationDecision extends CellDecoratorBase {
     void tryMakeNewConnection(){
         Query fOfFriendsQ = buildFofFQuery();
         GraphView view = filterController.filter(fOfFriendsQ);
-        Graph viewGraph = graphgame.CallingGephi.graphModel.getGraph(view);
+        Graph viewGraph = graphgame.Main.graphModel.getGraph(view);
         viewGraph.
-        List<Cell> fOfFriends = graphgame.CallingGephi.graphModel.getEdgeTable().
+        List<Cell> fOfFriends = graphgame.Main.graphModel.getEdgeTable().
     }
 
     private Query buildFofFQuery(){
