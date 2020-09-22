@@ -5,6 +5,7 @@ import graphgame.cellgraph.ListCellGraph;
 import graphgame.cellgraphgeneration.AssociationBasedGenerator;
 import graphgame.cellgraphgeneration.CellGraphGenerator;
 import graphgame.cellgraphgeneration.ImportGenerator;
+import graphgame.gephiutilities.GraphLayouter;
 import graphgame.simulation.associationsAndPruningSim;
 import graphgame.utilities.Observer;
 import graphgame.view.TextBasedView;
@@ -49,6 +50,7 @@ public class Simulation implements Observer {
         CellGraphGenerator graphGenerator =
                 AssociationBasedGenerator.Factory.getGenerator(250, 8);
         graphGenerator.generate();
+
         return graphGenerator.getCellGraph();
     }
 
@@ -56,12 +58,14 @@ public class Simulation implements Observer {
         GephiAdaptor.getInstance().importGraph();
         CellGraphGenerator importGenerator = ImportGenerator.Factory.getGenerator();
         importGenerator.generate();
+
         return importGenerator.getCellGraph();
     }
 
     private CellGraph iterateWorld() {
         graphgame.simulation.Simulation sim = new associationsAndPruningSim(cells);
         sim.iterate();
+
         return sim.getState();
     }
 
@@ -74,6 +78,9 @@ public class Simulation implements Observer {
     }
 
     private void saveGraph(){
+        //GraphLayouter layouter = GephiAdaptor.getLayouter();
+        //layouter.setAppearances();
+        //layouter.run(5);
         GephiAdaptor.getInstance().exportGraph();
     }
 

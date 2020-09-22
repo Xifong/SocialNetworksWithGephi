@@ -1,5 +1,7 @@
 package graphgame;
 
+import graphgame.gephiutilities.GraphLayouter;
+import org.gephi.appearance.api.AppearanceController;
 import org.gephi.filters.api.FilterController;
 import org.gephi.graph.api.*;
 import org.gephi.io.exporter.api.ExportController;
@@ -26,7 +28,10 @@ public class GephiAdaptor {
     private static FilterController filterController;
     private static ImportController importController;
     private static Table nodeTable;
+    private static AppearanceController appearanceController;
+
     private static GephiNodeManager nodeManager;
+    private static GraphLayouter layouter;
 
     private static GephiAdaptor singleton;
 
@@ -44,13 +49,32 @@ public class GephiAdaptor {
         filterController = defaultLookup.lookup(FilterController.class);
         importController = defaultLookup.lookup(ImportController.class);
         nodeTable = graphModel.getNodeTable();
+        appearanceController = defaultLookup.lookup(AppearanceController.class);
+
         nodeManager = new GephiNodeManager();
+        layouter = new GraphLayouter();
     }
 
     private static Workspace setupInitialProject(){
         ProjectController pc = defaultLookup.lookup(ProjectController.class);
         pc.newProject();
         return pc.getCurrentWorkspace();
+    }
+
+    public static GraphModel getGraphModel(){
+        return graphModel;
+    }
+
+    public static Graph getGraph(){
+        return graph;
+    }
+
+    public static GraphLayouter getLayouter(){
+        return layouter;
+    }
+
+    public static AppearanceController getAppearanceController(){
+        return appearanceController;
     }
 
     void addNodeAttribute(String attributeName, Class type){
